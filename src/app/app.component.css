@@ -1,0 +1,35 @@
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+    height: 100%;
+}
+ 
+mat-sidenav {
+    width: 250px;
+}
+ 
+main {
+    padding: 10px;
+}
+
+/* default background-color of mat-sidenav-container is black */
+.sidenav-container {
+    background-color: #e6f2ff;
+}
+
+main {
+    margin: 0 20px;
+    background-color: #ff8000;
+}
+
+.sidenav {
+    background-color: #00b300;
+}
+
+/* unable to se the width for cross-axis-item with fxFlex, thats why media is used */
+@media(max-width: 959px){
+    main {
+        margin: 0px;
+    }
+}
+
+/* avoid using ::ng-deep => depreciated soon. ViewEncapsulation.None might be another solution*/
+

@@ -1,0 +1,34 @@
+a {
+    text-decoration: none;
+    color: white;
+}
+ 
+a:hover, a:active {
+    color: lightgray;
+}
+
+button {
+    outline: none;
+}
+
+li {
+    border-right: 3px solid yellow;
+    padding-right: 15px;
+}
+
+.navigation-items{
+    font-size: 16px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+ 
+/* mat-toolbar{
+    margin-bottom: 20px;
+}
+ 
+@media(max-width: 959px){
+    mat-toolbar{
+        margin-bottom: 0px;
+    }
+} */
