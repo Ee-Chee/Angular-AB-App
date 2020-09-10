@@ -1,1 +1,126 @@
-<p>user-management works!</p>
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-card fxFlex="500px" fxFlex.xs="100%">
+        <mat-card-title *ngIf="!toggleUpdateDelete">Create a new member</mat-card-title>
+        <mat-card-title *ngIf="toggleUpdateDelete">Manage your details</mat-card-title>
+        <form [formGroup]="userDetailsForm" (ngSubmit)="onSubmitUserDetails(userDetailsForm.value)">
+            <mat-card-content fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutGap="10px">
+                <mat-form-field>
+                    <input matInput placeholder="Firstname" formControlName="firstname" required>
+                    <mat-hint align="end">At least 2 and not more than 20 characters long</mat-hint>
+                    <mat-error *ngFor="let validation of validationMessages.firstname">
+                        <mat-error
+                            *ngIf="userDetailsForm.get('firstname').hasError(validation.type) && (userDetailsForm.get('firstname').dirty || userDetailsForm.get('firstname').touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Lastname" formControlName="lastname" required>
+                    <mat-hint align="end">At least 2 and not more than 20 characters long</mat-hint>
+                    <mat-error *ngFor="let validation of validationMessages.lastname">
+                        <mat-error
+                            *ngIf="userDetailsForm.get('lastname').hasError(validation.type) && (userDetailsForm.get('lastname').dirty || userDetailsForm.get('lastname').touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select placeholder="Gender" formControlName="gender">
+                        <mat-option *ngFor="let gender of genders" [value]="gender">
+                            {{ gender }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of validationMessages.gender">
+                        <mat-error
+                            *ngIf="userDetailsForm.get('gender').hasError(validation.type) && (userDetailsForm.get('gender').dirty || userDetailsForm.get('gender').touched)">
+                            {{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Your Birthday</mat-label>
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                        placeholder="DD.MM.YYYY" formControlName="birthday" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngFor="let validation of validationMessages.birthday">
+                        <mat-error
+                            *ngIf="userDetailsForm.get('birthday').hasError(validation.type) && (userDetailsForm.get('birthday').dirty || userDetailsForm.get('birthday').touched)">
+                            {{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <div formGroupName="address" fxLayout="column wrap">
+                    <div>Address</div>
+                    <mat-form-field>
+                        <input matInput placeholder="Street" formControlName="street" required>
+                        <mat-error *ngFor="let validation of validationMessages.street">
+                            <mat-error
+                                *ngIf="userDetailsForm.get('address').get('street').hasError(validation.type) && (userDetailsForm.get('address').get('street').dirty || userDetailsForm.get('address').get('street').touched)">
+                                {{validation.message}}
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput type="number" placeholder="Number" formControlName="number" required>
+                        <mat-error *ngFor="let validation of validationMessages.number">
+                            <mat-error
+                                *ngIf="userDetailsForm.get('address').get('number').hasError(validation.type) && (userDetailsForm.get('address').get('number').dirty || userDetailsForm.get('address').get('number').touched)">
+                                {{validation.message}}
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput type="text" placeholder="Postcode" formControlName="postcode"
+                            [matAutocomplete]="auto" required>
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let postcode of filteredPostcodes | async" [value]="postcode">
+                                {{postcode}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngFor="let validation of validationMessages.postcode">
+                            <mat-error
+                                *ngIf="userDetailsForm.get('address').get('postcode').hasError(validation.type) && (userDetailsForm.get('address').get('postcode').dirty || userDetailsForm.get('address').get('postcode').touched)">
+                                {{validation.message}}
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-select placeholder="City" formControlName="city">
+                            <mat-option *ngFor="let city of cities" [value]="city">
+                                {{ city }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngFor="let validation of validationMessages.city">
+                            <mat-error
+                                *ngIf="userDetailsForm.get('address').get('city').hasError(validation.type) && (userDetailsForm.get('address').get('city').dirty || userDetailsForm.get('address').get('city').touched)">
+                                {{validation.message}}
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <mat-card-actions *ngIf="!toggleUpdateDelete">
+                    <button mat-raised-button color="primary" type="submit"
+                        [disabled]="userDetailsForm.invalid">
+                        Create
+                    </button>
+                    <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+                </mat-card-actions>
+                <mat-card-actions *ngIf="toggleUpdateDelete">
+                    <button mat-raised-button color="primary" type="submit"
+                        [disabled]="userDetailsForm.invalid">
+                        Update
+                    </button>
+                    <button type="button" mat-raised-button color="warn" (click)="onDelete()">Delete</button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</section>

@@ -1,0 +1,18 @@
+mat-form-field {
+    width: 400px;
+    /* border:1px solid red; */
+}
+
+/* mat-card-content {
+    border:1px solid blue;
+} */
+
+mat-card-title {
+    text-align: center;
+}
+
+@media(max-width: 599px){
+    mat-form-field {
+        width:250px;
+    }
+}

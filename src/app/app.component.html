@@ -6,6 +6,12 @@
         <mat-sidenav-content fxLayout="column" fxLayoutGap.gt-sm="20px">
             <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
             <main>
+                <div *ngIf="error$ | async">
+                    Error retrieving data
+                </div>
+                <div *ngIf="isLoading$ | async">
+                    Document Loading...
+                </div>
                 <router-outlet></router-outlet>
             </main>
         </mat-sidenav-content>

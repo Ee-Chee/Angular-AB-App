@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+}
+ 
+th.mat-header-cell {
+    text-align: left;
+}
+
+div {
+    background-color: white;
+}
+
+.filter-container {
+    text-align: center;
+}
+
+.row-link:hover {
+    background-color: lightsalmon;
+    cursor: pointer;
+}
+
+@media(max-width: 599px){
+    td.mat-cell {
+        font-size: small;
+    }
+}
+

@@ -1,1 +1,41 @@
-<p>users-list works!</p>
+<div fxLayout fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-form-field fxFlex.gt-md="50%">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="search($event.target.value)"
+            placeholder="Search by name/street/city/postcode" #input>
+    </mat-form-field>
+    <!-- Row shown when there is no matching data. -->
+    <!-- *matNoDataRow is another alternative but it is not working yet. -->
+    <!-- <div class="filter-container" fxFlex="100%" *ngIf="dataSource.filteredData.length == 0">
+        No data matching the filter "{{input.value}}"
+    </div> -->
+</div>
+
+<table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let i = index">
+            {{paginator.pageIndex == 0 ? i + 1 : 1 + i + paginator.pageIndex * paginator.pageSize}}
+        </td>
+    </ng-container>
+    <!-- matCellDef directive also exports the same properties as ngFor (index, even, odd, first, last) -->
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{ element.firstname }} {{ element.lastname }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef> Address </th>
+        <td mat-cell *matCellDef="let element"> {{ element.address | transformAddress }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="row-link"
+        [routerLink]="'/person/'+ row.id"></tr>
+    <!-- '/namehere' the / is needed so that as the user inserts the invalid url and after redirection, 
+        no error prompts when one of the row link is clicked-->
+</table>
+
+<mat-paginator [ngStyle]="{display: isLargeScreen ? 'block' : 'none'}" [pageSize]="2"
+    [pageSizeOptions]="[2, 5, 10]"></mat-paginator>
