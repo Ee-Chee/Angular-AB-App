@@ -3,13 +3,13 @@
 
 ## Features
 1) Flexlayout, Bootstrap and Angular Material (responsive design)
-2) Create, read, update delete features
+2) Create, read, update and delete features
 3) Form validations
-4) Pagination (disable in mobile view)
+4) Pagination (disabled in mobile view)
 5) Searchable list
 6) Auto-complete postcode and city applied automatically upon a selected postcode
 7) Lazyloaded routes
-8) Shared modules (feature modules)
+8) Shared module and feature modules
 9) Loading feature and error handling
 10) NgRx effects and entity store (feature store)
 11) Pipes and interfaces

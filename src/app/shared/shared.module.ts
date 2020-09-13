@@ -4,14 +4,8 @@ import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-// npm i @angular/material-moment-adapter
-// npm i -S moment
-import { UserManagementComponent, DateFormats } from '../components/user-management/user-management.component';
-
 @NgModule({
-    declarations: [UserManagementComponent],
+    declarations: [],
     imports: [
         CommonModule,
         MaterialModule,
@@ -22,10 +16,6 @@ import { UserManagementComponent, DateFormats } from '../components/user-managem
         MaterialModule,
         FlexLayoutModule,
         ReactiveFormsModule,
-    ],
-    providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: DateFormats }
     ]
 })
 export class SharedModule { }
