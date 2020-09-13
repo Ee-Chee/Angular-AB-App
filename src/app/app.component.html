@@ -3,15 +3,16 @@
         <mat-sidenav class="sidenav" #sidenav role="navigation">
             <app-side-nav (sidenavClose)="sidenav.close()"></app-side-nav>
         </mat-sidenav>
-        <mat-sidenav-content fxLayout="column" fxLayoutGap.gt-sm="20px">
+        <mat-sidenav-content fxLayout="column" fxLayoutGap="0px" fxLayoutGap.gt-sm="20px">
             <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
-            <main>
-                <div *ngIf="error$ | async">
-                    Error retrieving data
-                </div>
-                <div *ngIf="isLoading$ | async">
-                    Document Loading...
-                </div>
+            <mat-spinner fxFlexAlign="center" *ngIf="isLoading$ | async"></mat-spinner>
+            <section *ngIf="error$ | async" fxLayout="column" fxLayoutAlign="center center">
+                <h1 mat-dialog-title>Error message</h1>
+                <mat-dialog-content>
+                    <p>{{error$ | async}}</p>
+                </mat-dialog-content>
+            </section>
+            <main *ngIf="!(isLoading$ | async)">
                 <router-outlet></router-outlet>
             </main>
         </mat-sidenav-content>

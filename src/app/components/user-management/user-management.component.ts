@@ -215,7 +215,6 @@ export class UserManagementComponent implements OnInit {
                 new AddressBookStoreActions.CreateUserAction({ item: this.mappedFormObject })
             );
         }
-        this.router.navigate(['']);
     }
 
     onCancel() {
@@ -226,6 +225,5 @@ export class UserManagementComponent implements OnInit {
         this.store$.dispatch(
             new AddressBookStoreActions.DeleteUserAction({ id: this.route.snapshot.paramMap.get('id') })
         );
-        this.router.navigate(['']);
     }
 }

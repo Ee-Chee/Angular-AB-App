@@ -3,6 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of as observableOf } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { UserAddress } from '../../interfaces/address-interfaces';
 import { FirebaseService } from '../../services/firebase.service';
@@ -11,7 +12,7 @@ import * as addressBookActions from './actions';
 @Injectable()
 export class AddressBookStoreEffects {
 
-    constructor(private firebaseService: FirebaseService, private actions$: Actions) { }
+    constructor(private firebaseService: FirebaseService, private actions$: Actions, private router: Router) { }
 
     @Effect()
     readDataEffect$: Observable<Action> = this.actions$.pipe(
@@ -40,9 +41,11 @@ export class AddressBookStoreEffects {
     updateInfoEffect$: Observable<Action> = this.actions$.pipe(
         ofType<addressBookActions.UpdateInfoAction>(addressBookActions.ActionTypes.UPDATE_INFO),
         switchMap(action =>
-            this.firebaseService.updateUserInfo(action.payload.item).then(() =>
-                new addressBookActions.UpdateSuccessAction({ item: action.payload.item })
-            ).catch(
+            this.firebaseService.updateUserInfo(action.payload.item).then(() => {
+                this.router.navigate(['']);
+                // throw new Error("error testing!");
+                return new addressBookActions.UpdateSuccessAction({ item: action.payload.item })
+            }).catch(
                 error => new addressBookActions.RequestFailureAction({ error })
             )
         )
@@ -55,9 +58,10 @@ export class AddressBookStoreEffects {
         switchMap(action =>
             this.firebaseService.createUserAddress(action.payload.item).then(
                 (docRef) => {
-                    const item: UserAddress = { id: docRef.id, ...action.payload.item }
+                    const item: UserAddress = { id: docRef.id, ...action.payload.item };
                     //console.log("item", item); //Entity state != firestore collection data.
                     //Must provide id before updating the entity state
+                    this.router.navigate(['']);
                     return new addressBookActions.CreateSuccessAction({ item })
                 }
             ).catch(
@@ -70,11 +74,13 @@ export class AddressBookStoreEffects {
     deleteUserEffect$: Observable<Action> = this.actions$.pipe(
         ofType<addressBookActions.DeleteUserAction>(addressBookActions.ActionTypes.DELETE_USER),
         switchMap(action =>
-            this.firebaseService.deleteUserAddress(action.payload.id).then(() =>
-                new addressBookActions.DeleteSuccessAction({ id: action.payload.id })
-            ).catch(
+            this.firebaseService.deleteUserAddress(action.payload.id).then(() => {
+                this.router.navigate(['']);
+                return new addressBookActions.DeleteSuccessAction({ id: action.payload.id });
+            }).catch(
                 error => new addressBookActions.RequestFailureAction({ error })
             )
         )
     );
 }
+// https://stackoverflow.com/questions/49120326/error-handling-when-getting-document-from-firestore

@@ -38,7 +38,7 @@ export function addressBookReducer(state = initialState, action: Actions): State
                 error: null
             });
         }
-        case ActionTypes.UPDATE_INFO: {
+        case ActionTypes.DELETE_USER: {
             return {
                 ...state,
                 isLoading: true,
@@ -52,7 +52,7 @@ export function addressBookReducer(state = initialState, action: Actions): State
                 error: null
             });
         }
-        case ActionTypes.DELETE_USER: {
+        case ActionTypes.CREATE_USER: {
             return {
                 ...state,
                 isLoading: true,
